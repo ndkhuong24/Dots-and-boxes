@@ -5,12 +5,16 @@ public class GridGenerator : MonoBehaviour
     public GameObject dotPrefab;
     public GameObject linePrefab;
 
-    public int rows = 4;   // số hàng Dot
-    public int cols = 4;   // số cột Dot
-    public float spacing = 1.0f;
+    public int rows = 5;
+    public int cols = 5;
+
+    private float gridSize = 9f;
+    private float spacing;
 
     void Start()
     {
+        spacing = gridSize / (Mathf.Max(rows, cols) - 1);
+
         GenerateGrid();
     }
 
