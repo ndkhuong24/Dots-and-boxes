@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class LineHover : MonoBehaviour
 {
@@ -11,17 +13,7 @@ public class LineHover : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        SetAlpha(0f); // ẩn vạch ban đầu
-    }
-
-    void OnMouseEnter()
-    {
-        if (!isFilled) SetAlpha(0.3f); // Hover mờ mờ
-    }
-
-    void OnMouseExit()
-    {
-        if (!isFilled) SetAlpha(0f); // Rời chuột thì ẩn lại
+        SetAlpha(0f);
     }
 
     void OnMouseDown()
@@ -30,14 +22,27 @@ public class LineHover : MonoBehaviour
 
         isFilled = true;
 
-        // Đặt màu tùy lượt
-        sr.color = isPlayerTurn ? Color.green : Color.red;
+        sr.color = isPlayerTurn ? new Color32(0x00, 0xD2, 0xFE, 0xFF) : new Color32(0xFE, 0x72, 0x72, 0xFF);
 
         SetAlpha(1f); // Hiện rõ
 
         // Chuyển lượt
         isPlayerTurn = !isPlayerTurn;
+
+        StartCoroutine(ResetColorAfterDelay(1f));
     }
+
+    private IEnumerator ResetColorAfterDelay(float v)
+    {
+        yield return new WaitForSeconds(v);
+
+        Color color;
+        if (ColorUtility.TryParseHtmlString("#424042", out color))
+        {
+            sr.color = color;
+        }
+    }
+
 
     private void SetAlpha(float alpha)
     {
