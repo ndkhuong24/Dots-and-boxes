@@ -38,8 +38,13 @@ public class LineHover : MonoBehaviour
 
         SetAlpha(1f); // Hiện rõ
 
-        // Xác định người chơi hiện tại
         int player = isPlayerTurn ? 1 : 2;
+
+        // Lưu trạng thái hoàn thành trước khi cập nhật
+        bool boxACompletedBefore = boxA != null && boxA.IsCompleted();
+        bool boxBCompletedBefore = boxB != null && boxB.IsCompleted();
+        bool boxCCompletedBefore = boxC != null && boxC.IsCompleted();
+        bool boxDCompletedBefore = boxD != null && boxD.IsCompleted();
 
         // Cập nhật trạng thái cạnh cho các box liên quan
         if (boxA != null) boxA.SetEdge(edgeA, player);
@@ -47,8 +52,17 @@ public class LineHover : MonoBehaviour
         if (boxC != null) boxC.SetEdge(edgeC, player);
         if (boxD != null) boxD.SetEdge(edgeD, player);
 
-        // Chuyển lượt
-        isPlayerTurn = !isPlayerTurn;
+        // Kiểm tra nếu có box nào vừa hoàn thành thì không chuyển lượt
+        bool justCompleted =
+            (boxA != null && !boxACompletedBefore && boxA.IsCompleted()) ||
+            (boxB != null && !boxBCompletedBefore && boxB.IsCompleted()) ||
+            (boxC != null && !boxCCompletedBefore && boxC.IsCompleted()) ||
+            (boxD != null && !boxDCompletedBefore && boxD.IsCompleted());
+
+        if (!justCompleted)
+        {
+            isPlayerTurn = !isPlayerTurn;
+        }
 
         StartCoroutine(ResetColorAfterDelay(1f));
     }

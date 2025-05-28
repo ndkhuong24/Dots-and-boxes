@@ -25,8 +25,16 @@ public class GridGenerator : MonoBehaviour
 
     void GenerateGrid()
     {
-        Vector2 gridCenter = Vector2.zero; // gốc thế giới là trung tâm
-        Vector2 startPos = gridCenter - new Vector2((cols - 1) * spacing / 2f, (rows - 1) * spacing / 2f);
+        float camHeight = 2f * Camera.main.orthographicSize;
+        float camWidth = camHeight * Camera.main.aspect;
+        Vector2 camCenter = Camera.main.transform.position;
+
+        float centerX = camCenter.x - camWidth / 2f + camWidth * 0.68f;
+        float centerY = camCenter.y;
+        Vector2 gridCenter = new Vector2(centerX, centerY);
+
+        Vector2 gridSize = new Vector2((cols - 1) * spacing, (rows - 1) * spacing);
+        Vector2 startPos = gridCenter - gridSize / 2f;
 
         GameObject[,] dots = new GameObject[rows, cols];
 

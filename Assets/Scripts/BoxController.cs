@@ -25,7 +25,7 @@ public class BoxController : MonoBehaviour
         }
     }
 
-    private bool IsCompleted()
+    public bool IsCompleted()
     {
         return edges[0] && edges[1] && edges[2] && edges[3];
     }
