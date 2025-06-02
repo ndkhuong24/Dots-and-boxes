@@ -7,24 +7,25 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown colsDropdown;
     public TMP_Dropdown modesDropdown;
 
-    public void StartGame()
+    void Start()
     {
-        // Lấy số hàng/cột từ dropdown
-        int rows = rowsDropdown.value + 5; // Vì index 0 = 5
-        int cols = colsDropdown.value + 5;
+        rowsDropdown.value = 0;
+        colsDropdown.value = 0;
+        modesDropdown.value = 0;
 
-        // Lấy chế độ chơi
-        string mode = modesDropdown.options[modesDropdown.value].text;
-
-        // In ra để kiểm tra
-        Debug.Log($"Rows: {rows}, Cols: {cols}, Mode: {mode}");
-
-        // Gửi thông tin đến GameManager (hoặc xử lý khởi tạo tại đây)
-        // GameManager.Instance.Setup(rows, cols, mode);
+        rowsDropdown.RefreshShownValue();
+        colsDropdown.RefreshShownValue();
+        modesDropdown.RefreshShownValue();
     }
 
-    private void Start()
+    public void StartGame()
     {
-        StartGame(); // Gọi hàm StartGame khi bắt đầu trò chơi
+        int rows = rowsDropdown.value + 5;
+        int cols = colsDropdown.value + 5;
+
+        string modeText = modesDropdown.options[modesDropdown.value].text;
+        GameMode mode = modeText == "Player vs Player" ? GameMode.PlayerVsPlayer : GameMode.PlayerVsAI;
+
+        GameManager.Instance.Setup(rows, cols, mode);
     }
 }
