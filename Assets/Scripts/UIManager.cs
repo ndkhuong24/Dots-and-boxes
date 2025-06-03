@@ -1,11 +1,14 @@
-﻿using TMPro;
+﻿ using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public TMP_Dropdown rowsDropdown;
     public TMP_Dropdown colsDropdown;
     public TMP_Dropdown modesDropdown;
+
+    public Button startButton;
 
     void Start()
     {
@@ -16,6 +19,8 @@ public class UIManager : MonoBehaviour
         rowsDropdown.RefreshShownValue();
         colsDropdown.RefreshShownValue();
         modesDropdown.RefreshShownValue();
+
+        startButton.onClick.AddListener(StartGame);
     }
 
     public void StartGame()
