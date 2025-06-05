@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -186,6 +188,18 @@ public class GridGenerator : MonoBehaviour
 
     void Start()
     {
-        Generate(5, 5); // Test thử
+        Generate(5, 5);
+    }
+
+    public BoxController[] GetAllBoxes()
+    {
+        int rows = boxes.GetLength(0);
+        int cols = boxes.GetLength(1);
+        BoxController[] all = new BoxController[rows * cols];
+        int idx = 0;
+        for (int y = 0; y < rows; y++)
+            for (int x = 0; x < cols; x++)
+                all[idx++] = boxes[y, x];
+        return all;
     }
 }

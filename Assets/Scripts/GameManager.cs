@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TMPro;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,8 +8,14 @@ public class GameManager : MonoBehaviour
 
     public GridGenerator gridGenerator;
 
-    public int rows = 5;
-    public int cols = 5;
+    public TextMeshProUGUI playerScoreText;
+    public TextMeshProUGUI aiScoreText;
+    private int playerScore = 0;
+    private int aiScore = 0;
+
+    public int rows;
+    public int cols;
+
     public GameMode mode = GameMode.PlayerVsAI;
 
     void Awake()
@@ -29,5 +37,37 @@ public class GameManager : MonoBehaviour
         mode = m;
 
         gridGenerator.Generate(rows, cols);
+    }
+
+    internal void AddScore(int player, int amount)
+    {
+        if (player == 1)
+        {
+            playerScore += amount;
+            playerScoreText.text = playerScore.ToString();
+        }
+        else
+        {
+            aiScore += amount;
+            aiScoreText.text = aiScore.ToString();
+        }
+    }
+
+    public void CheckGameEnd()
+    {
+        foreach (var box in gridGenerator.GetAllBoxes())
+        {
+            if (box.owner == 0)
+            {
+                return;
+            }
+        }
+
+        if (playerScore > aiScore)
+            Debug.Log("Player thắng!");
+        else if (playerScore < aiScore)
+            Debug.Log("Bot thắng!");
+        else
+            Debug.Log("Hòa!");
     }
 }
