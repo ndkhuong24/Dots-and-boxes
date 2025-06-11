@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GridGenerator gridGenerator;
+    [SerializeField] private GameMode gameMode;
+    [SerializeField] private bool isPlayerOneTurn = true;
+    [SerializeField] private GridGenerator gridGenerator;
+    [SerializeField] private SimpleAI ai;
 
     public TextMeshProUGUI playerScoreText;
     public TextMeshProUGUI aiScoreText;
@@ -70,4 +73,20 @@ public class GameManager : MonoBehaviour
         else
             Debug.Log("Hòa!");
     }
+
+    private void EndTurn()
+    {
+        isPlayerOneTurn = !isPlayerOneTurn;
+
+        if (mode == GameMode.PlayerVsAI && !isPlayerOneTurn)
+        {
+            Invoke(nameof(CallAI), 0.5f);
+        }
+    }
+
+    private void CallAI()
+    {
+        ai.MakeMove();
+    }
+
 }

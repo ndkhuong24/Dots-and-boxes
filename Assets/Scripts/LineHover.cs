@@ -22,6 +22,15 @@ public class LineHover : MonoBehaviour
     public BoxController boxD;
     public int edgeD;
 
+    public bool IsSelected { get; private set; } = false;
+
+    public void OnClick()
+    {
+        if (IsSelected) return;
+
+        IsSelected = true;
+    }
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();

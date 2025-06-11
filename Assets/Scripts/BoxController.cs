@@ -28,6 +28,8 @@ public class BoxController : MonoBehaviour
 
             //Check End Game
             GameManager.Instance.CheckGameEnd();
+
+            //GameManager.Instance.EndTurn();
         }
     }
 

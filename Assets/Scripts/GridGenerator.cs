@@ -17,6 +17,8 @@ public class GridGenerator : MonoBehaviour
     private float spacing;
     private BoxController[,] boxes;
 
+    private List<LineHover> allLines = new List<LineHover>();
+
     public void Generate(int rows, int cols)
     {
         // Xóa grid cũ nếu có
@@ -24,6 +26,8 @@ public class GridGenerator : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        allLines.Clear();
 
         spacing = gridSize / (Mathf.Max(rows, cols) - 1);
 
@@ -76,50 +80,6 @@ public class GridGenerator : MonoBehaviour
         CreateLines(rows, cols, dots, false, lineUnderPrefab, false);
     }
 
-    //private void CreateLines(int rows, int cols, GameObject[,] dots, bool horizontal, GameObject prefab, bool assignBoxes)
-    //{
-    //    SpriteRenderer sr = prefab.GetComponent<SpriteRenderer>();
-    //    float width = sr.bounds.size.x;
-
-    //    int loopA = horizontal ? rows : rows - 1;
-    //    int loopB = horizontal ? cols - 1 : cols;
-
-    //    for (int a = 0; a < loopA; a++)
-    //    {
-    //        for (int b = 0; b < loopB; b++)
-    //        {
-    //            GameObject dot1 = horizontal ? dots[a, b] : dots[b, a];
-    //            GameObject dot2 = horizontal ? dots[a, b + 1] : dots[b + 1, a];
-    //            Vector2 pos = (dot1.transform.position + dot2.transform.position) / 2f;
-
-    //            GameObject line = Instantiate(prefab, pos, Quaternion.identity, transform);
-
-    //            if (horizontal)
-    //                line.transform.localScale = new Vector3(spacing, width / 2, 1);
-    //            else
-    //                line.transform.localScale = new Vector3(width / 2, spacing, 1);
-
-    //            if (assignBoxes)
-    //            {
-    //                LineHover hover = line.GetComponent<LineHover>();
-    //                if (hover != null)
-    //                {
-    //                    if (horizontal)
-    //                    {
-    //                        if (a > 0) { hover.boxA = boxes[a - 1, b]; hover.edgeA = 2; }
-    //                        if (a < rows - 1) { hover.boxB = boxes[a, b]; hover.edgeB = 0; }
-    //                    }
-    //                    else
-    //                    {
-    //                        if (b > 0) { hover.boxA = boxes[b, a - 1]; hover.edgeA = 1; }
-    //                        if (b < cols - 1) { hover.boxB = boxes[b, a]; hover.edgeB = 3; }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
     private void CreateLines(int rows, int cols, GameObject[,] dots, bool horizontal, GameObject prefab, bool assignBoxes)
     {
         SpriteRenderer sr = prefab.GetComponent<SpriteRenderer>();
@@ -136,13 +96,14 @@ public class GridGenerator : MonoBehaviour
                     Vector2 pos = (dot1.transform.position + dot2.transform.position) / 2f;
 
                     GameObject line = Instantiate(prefab, pos, Quaternion.identity, transform);
-
                     line.transform.localScale = new Vector3(spacing, width / 2, 1);
 
-                    if (assignBoxes)
+                    LineHover hover = line.GetComponent<LineHover>();
+                    if (hover != null)
                     {
-                        LineHover hover = line.GetComponent<LineHover>();
-                        if (hover != null)
+                        allLines.Add(hover);
+
+                        if (assignBoxes)
                         {
                             if (y > 0) { hover.boxA = boxes[y - 1, x]; hover.edgeA = 2; }
                             if (y < rows - 1) { hover.boxB = boxes[y, x]; hover.edgeB = 0; }
@@ -162,13 +123,14 @@ public class GridGenerator : MonoBehaviour
                     Vector2 pos = (dot1.transform.position + dot2.transform.position) / 2f;
 
                     GameObject line = Instantiate(prefab, pos, Quaternion.identity, transform);
-
                     line.transform.localScale = new Vector3(width / 2, spacing, 1);
 
-                    if (assignBoxes)
+                    LineHover hover = line.GetComponent<LineHover>();
+                    if (hover != null)
                     {
-                        LineHover hover = line.GetComponent<LineHover>();
-                        if (hover != null)
+                        allLines.Add(hover);
+
+                        if (assignBoxes)
                         {
                             if (x > 0) { hover.boxA = boxes[y, x - 1]; hover.edgeA = 1; }
                             if (x < cols - 1) { hover.boxB = boxes[y, x]; hover.edgeB = 3; }
@@ -201,5 +163,18 @@ public class GridGenerator : MonoBehaviour
             for (int x = 0; x < cols; x++)
                 all[idx++] = boxes[y, x];
         return all;
+    }
+
+    public List<LineHover> GetAvailableLines()
+    {
+        List<LineHover> result = new List<LineHover>();
+        foreach (var line in allLines)
+        {
+            if (!line.IsSelected)
+            {
+                result.Add(line);
+            }
+        }
+        return result;
     }
 }
