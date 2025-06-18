@@ -27,9 +27,7 @@ public class BoxController : MonoBehaviour
             GameManager.Instance.AddScore(player, 1);
 
             //Check End Game
-            GameManager.Instance.CheckGameEnd();
-
-            //GameManager.Instance.EndTurn();
+            GameManager.Instance.CheckGameEnd(); 
         }
     }
 

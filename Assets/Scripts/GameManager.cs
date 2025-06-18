@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         mode = m;
 
         gridGenerator.Generate(rows, cols);
+        ai.Init(gridGenerator);
     }
 
     internal void AddScore(int player, int amount)
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Hòa!");
     }
 
-    private void EndTurn()
+    public void EndTurn()
     {
         isPlayerOneTurn = !isPlayerOneTurn;
 
@@ -88,5 +89,4 @@ public class GameManager : MonoBehaviour
     {
         ai.MakeMove();
     }
-
 }

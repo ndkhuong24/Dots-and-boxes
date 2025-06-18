@@ -148,10 +148,10 @@ public class GridGenerator : MonoBehaviour
         return sum / objs.Length;
     }
 
-    void Start()
-    {
-        Generate(5, 5);
-    }
+    //void Start()
+    //{
+    //    Generate(5, 5);
+    //}
 
     public BoxController[] GetAllBoxes()
     {
