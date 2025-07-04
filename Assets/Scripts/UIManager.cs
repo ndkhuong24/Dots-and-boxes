@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI playerScoreText;
     public TextMeshProUGUI aiScoreText;
 
+    public TextMeshProUGUI playerName2;
+
     public Button startButton;
 
     void Start()

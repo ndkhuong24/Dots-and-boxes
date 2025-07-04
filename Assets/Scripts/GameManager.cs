@@ -47,6 +47,31 @@ public class GameManager : MonoBehaviour
         {
             ai.Init(gridGenerator);
         }
+
+        if (m == GameMode.PlayerVsAI)
+        {
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.playerName2.text = "Bot";
+            }
+            else
+            {
+                Debug.LogError("UIManager instance not found in the scene.");
+            }
+        }
+        else if (m == GameMode.PlayerVsPlayer)
+        {
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.playerName2.text = "Player 2";
+            }
+            else
+            {
+                Debug.LogError("UIManager instance not found in the scene.");
+            }
+        }
     }
 
     internal void AddScore(int player, int amount)
