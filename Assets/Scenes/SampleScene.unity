@@ -2981,6 +2981,8 @@ MonoBehaviour:
   rowsDropdown: {fileID: 1367253030}
   colsDropdown: {fileID: 1491189664}
   modesDropdown: {fileID: 1032793942}
+  playerScoreText: {fileID: 1369141899}
+  aiScoreText: {fileID: 1977908446}
   startButton: {fileID: 1781473408}
 --- !u!4 &988675239
 Transform:

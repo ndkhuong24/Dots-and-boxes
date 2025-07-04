@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown colsDropdown;
     public TMP_Dropdown modesDropdown;
 
+    public TextMeshProUGUI playerScoreText;
+    public TextMeshProUGUI aiScoreText;
+
     public Button startButton;
 
     void Start()
@@ -27,6 +30,8 @@ public class UIManager : MonoBehaviour
     {
         int rows = rowsDropdown.value + 5;
         int cols = colsDropdown.value + 5;
+
+        GameManager.Instance.ResetGame();
 
         string modeText = modesDropdown.options[modesDropdown.value].text;
         GameMode mode = modeText == "Player vs Player" ? GameMode.PlayerVsPlayer : GameMode.PlayerVsAI;

@@ -27,12 +27,22 @@ public class BoxController : MonoBehaviour
             GameManager.Instance.AddScore(player, 1);
 
             //Check End Game
-            GameManager.Instance.CheckGameEnd(); 
+            GameManager.Instance.CheckGameEnd();
         }
     }
 
     public bool IsCompleted()
     {
         return edges[0] && edges[1] && edges[2] && edges[3];
+    }
+
+    public int MissingEdges()
+    {
+        int count = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (!edges[i]) count++;
+        }
+        return count;
     }
 }

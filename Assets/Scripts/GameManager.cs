@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool IsPlayerOneTurn { get; internal set; }
 
     [SerializeField] private GameMode gameMode;
-    [SerializeField] private bool isPlayerOneTurn = true;
     [SerializeField] private GridGenerator gridGenerator;
     [SerializeField] private SimpleAI ai;
 
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public int rows;
     public int cols;
 
-    public GameMode mode = GameMode.PlayerVsAI;
+    public GameMode mode;
 
     void Awake()
     {
@@ -39,8 +39,14 @@ public class GameManager : MonoBehaviour
         cols = c;
         mode = m;
 
+        IsPlayerOneTurn = true;
+
         gridGenerator.Generate(rows, cols);
-        ai.Init(gridGenerator);
+
+        if (m == GameMode.PlayerVsAI)
+        {
+            ai.Init(gridGenerator);
+        }
     }
 
     internal void AddScore(int player, int amount)
@@ -77,9 +83,9 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        isPlayerOneTurn = !isPlayerOneTurn;
+        IsPlayerOneTurn = !IsPlayerOneTurn;
 
-        if (mode == GameMode.PlayerVsAI && !isPlayerOneTurn)
+        if (mode == GameMode.PlayerVsAI && !IsPlayerOneTurn)
         {
             Invoke(nameof(CallAI), 0.5f);
         }
@@ -88,5 +94,13 @@ public class GameManager : MonoBehaviour
     private void CallAI()
     {
         ai.MakeMove();
+    }
+
+    public void ResetGame()
+    {
+        playerScore = 0;
+        aiScore = 0;
+        playerScoreText.text = "0";
+        aiScoreText.text = "0";
     }
 }
