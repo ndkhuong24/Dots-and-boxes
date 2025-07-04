@@ -2382,7 +2382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
-  isPlayerOneTurn: 1
   gridGenerator: {fileID: 2093373857}
   ai: {fileID: 299834706}
   playerScoreText: {fileID: 1369141899}
@@ -2983,6 +2982,7 @@ MonoBehaviour:
   modesDropdown: {fileID: 1032793942}
   playerScoreText: {fileID: 1369141899}
   aiScoreText: {fileID: 1977908446}
+  playerName2: {fileID: 2069942816}
   startButton: {fileID: 1781473408}
 --- !u!4 &988675239
 Transform:
