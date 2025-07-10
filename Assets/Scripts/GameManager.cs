@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
             UIManager uiManager = FindFirstObjectByType<UIManager>();
             if (uiManager != null)
             {
-                uiManager.playerName2.text = "Bot";
+                //uiManager.playerName2.text = "Bot";
+                //uiManager.playerName1.text = "Player";
             }
             else
             {
@@ -65,7 +66,8 @@ public class GameManager : MonoBehaviour
             UIManager uiManager = FindFirstObjectByType<UIManager>();
             if (uiManager != null)
             {
-                uiManager.playerName2.text = "Player 2";
+                //uiManager.playerName2.text = "Player 2";
+                //uiManager.playerName1.text = "Player 1";
             }
             else
             {
